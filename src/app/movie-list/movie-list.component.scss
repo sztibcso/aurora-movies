@@ -1,0 +1,92 @@
+body {
+    font-family: 'MyCustomFont', sans-serif;
+}
+
+mat-toolbar { 
+    background: transparent;
+}
+.movies-container {
+    padding: 20px;
+    background: transparent;
+    min-height: calc(100vh - 64px);
+    position: relative;
+    z-index: 1;
+}
+
+/* Toolbar stílusok */
+.toolbar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.toolbar-link {
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+    color: white;
+}
+
+/* Swiper beállítások */
+swiper-container::part(wrapper) {
+    align-items: stretch;
+}
+
+swiper-container::part(slide) {
+    display: flex;
+    align-items: stretch;
+}
+
+/* Filmkártya stílusok */
+.movie-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+}
+
+.movie-card mat-card {
+    position: relative;
+    /* Ahhoz, hogy az abszolút pozícionált sorszám a kártyán belül legyen */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid grey;
+    background: transparent;
+}
+
+/* Sorszám megjelenítése a kártyán (a kép fölött) */
+.card-number {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 1rem;
+    z-index: 10;
+}
+
+/* Mivel a sorszámot már a mat-card belsejébe tesszük, a .card-number osztályt alkalmazzuk a megfelelő elemre */
+.card-container {
+    position: relative;
+}
+
+.paginator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+.text {
+    color: white;
+    font-family: 'MyCustomFont', sans-serif;
+}

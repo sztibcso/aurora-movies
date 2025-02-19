@@ -1,0 +1,10 @@
+.bg-video {
+    position: fixed;  /* Fixált háttér */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* A videó megtartja az arányait, és kitölti a teret */
+    z-index: -1;  /* A videó a háttérben marad */
+  }
+  

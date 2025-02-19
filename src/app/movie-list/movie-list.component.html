@@ -1,0 +1,56 @@
+<mat-toolbar color="primary">
+    <span class="toolbar-title">Movie List</span>
+    <span class="spacer"></span>
+    <a routerLink="/dont-click" class="toolbar-link">Don't Click Me!</a>
+  </mat-toolbar>
+  
+  <div class="movies-container">
+    <swiper-container
+      #swiper
+      slides-per-view="1"
+      space-between="10"
+      breakpoints='{
+        "640": { "slidesPerView": 2, "spaceBetween": 20 },
+        "1024": { "slidesPerView": 3, "spaceBetween": 30 },
+        "1440": { "slidesPerView": 5, "spaceBetween": 40 }
+      }'
+    >
+      <!-- Prev navigációs slide: csak ha currentPage > 0 -->
+      <swiper-slide #card class="paginator" *ngIf="currentPage > 0">
+        <button mat-raised-button color="accent" (click)="prevPage()">
+          PREV
+        </button>
+      </swiper-slide>
+  
+      <!-- Filmkártyák, sorszámozással -->
+      <swiper-slide *ngFor="let movie of movies.items; let i = index" class="movie-card">
+        <mat-card #card class="card-container">
+          <!-- Sorszám overlay: a globális indexet számoljuk ki -->
+          <div class="card-number">
+            {{ currentPage * pageSize + i + 1 }}
+          </div>
+          <img
+            mat-card-image
+            [src]="movie.image_url"
+            alt="{{ movie.title }}"
+            (load)="onImageLoad()"
+          />
+          <mat-card-header>
+            <mat-card-title class="text">{{ movie.title }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="text">{{ movie.description }}</p>
+            <p class="text"><strong>Rating:</strong> {{ movie.rating }}</p>
+          </mat-card-content>
+        </mat-card>
+      </swiper-slide>
+  
+      <!-- Next navigációs slide: csak ha van következő oldal -->
+      <swiper-slide #card class="paginator" *ngIf="(currentPage + 1) * pageSize < movies.total">
+        <button mat-raised-button color="accent" (click)="nextPage()">
+          NEXT
+        </button>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+  
