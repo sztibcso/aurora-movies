@@ -37,22 +37,21 @@ export class MovieListComponent implements OnInit {
   movies: PaginatedMovies = { items: [], total: 0 };
   currentPage = 0;
   pageSize = 10;
-  // A navigáció irányát tároljuk: 'next' vagy 'prev'
   navigationDirection: 'next' | 'prev' = 'next';
 
-  // Filmkártyák DOM elemei (#card)
+  // Movie cards DOM elements (#card)
   @ViewChildren('card', { read: ElementRef }) cards!: QueryList<ElementRef>;
-  // A swiper-container referenciája (#swiper)
+  // The swiper-container reference (#swiper)
   @ViewChild('swiper', { read: ElementRef }) swiperRef!: ElementRef;
 
-  // A képek betöltésének nyomon követése a kiegyenlítéshez
+  // Tracking image loading for balancing
   totalImages = 0;
   loadedImages = 0;
 
   constructor(
     private movieService: MovieService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.fetchMovies();
@@ -63,12 +62,10 @@ export class MovieListComponent implements OnInit {
     this.movieService.getMovies(skip, this.pageSize).subscribe({
       next: (data) => {
         this.movies = data;
-        // Számoljuk, hány filmkártya tartalmaz képet
         this.totalImages = data.items.filter(item => !!item.image_url).length;
         this.loadedImages = 0;
 
-        // Új adatok betöltésekor reseteljük a swiper pozícióját.
-        // Ha "next" esetén a lap elejére, ha "prev" esetén a lap utolsó filmkártyájára ugrik.
+        // If "next" is selected, it jumps to the beginning of the page; if "prev" is selected, it jumps to the last movie card on the page.
         setTimeout(() => {
           if (
             this.swiperRef &&
@@ -77,11 +74,10 @@ export class MovieListComponent implements OnInit {
             typeof this.swiperRef.nativeElement.swiper.slideTo === 'function'
           ) {
             if (this.navigationDirection === 'next') {
-              // Ha currentPage > 0, akkor van Prev slide, így a filmkártyák 1-től kezdődnek.
               const indexToSlide = this.currentPage > 0 ? 1 : 0;
               this.swiperRef.nativeElement.swiper.slideTo(indexToSlide, 0);
             } else if (this.navigationDirection === 'prev') {
-              // Növeljük a késleltetést, hogy biztos legyen az új DOM.
+              // We increase the delay to ensure the new DOM is ready.
               setTimeout(() => {
                 const offset = this.currentPage > 0 ? 1 : 0;
                 const movieSlidesCount = this.movies.items.length;
@@ -131,7 +127,7 @@ export class MovieListComponent implements OnInit {
   }
 
   equalizeCardHeights() {
-    // Reset minHeight, hogy újraszámolhassuk a tényleges magasságokat
+    // Reset minHeight to recalculate the actual heights.
     this.cards.forEach((cardRef) => {
       cardRef.nativeElement.style.minHeight = 'auto';
     });
@@ -142,7 +138,7 @@ export class MovieListComponent implements OnInit {
         maxHeight = h;
       }
     });
-    // Minden kártyára beállítjuk a legmagasabb magasságot
+    // Set the highest height for all cards.
     this.cards.forEach((cardRef) => {
       cardRef.nativeElement.style.minHeight = maxHeight + 'px';
     });

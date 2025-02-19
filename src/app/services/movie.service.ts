@@ -21,7 +21,7 @@ export interface PaginatedMovies {
 export class MovieService {
   private readonly apiUrl = 'https://november7-730026606190.europe-west1.run.app/movies/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getMovies(skip: number = 0, limit: number = 10, query?: string): Observable<PaginatedMovies> {
     let params = new HttpParams()
