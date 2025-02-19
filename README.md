@@ -1,6 +1,3 @@
-Below is the complete README text that you can copy and paste into a text file (for example, `README.txt`):
-
-```markdown
 # Aurora Movie List Application
 
 ## Description
@@ -68,10 +65,9 @@ The application includes the following routes:
 ## Credits
 
 - **Szalontai Tibor** – Written and Directed  
+- **Hired by AURORA**
 
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 ```
-
-Simply copy all of the text above and paste it into your `README.txt` or `README.md` file on GitHub.
